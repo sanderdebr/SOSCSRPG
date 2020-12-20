@@ -27,8 +27,7 @@ namespace Engine.Models
         public string CharacterClass
         {
             get { return _characterClass; }
-            set
-            {
+            set { 
                 _characterClass = value;
                 OnPropertyChanged("CharacterClass");
             }
