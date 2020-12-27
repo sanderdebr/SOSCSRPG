@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Engine.Factories
 {
-    internal class WorldFactory
+    internal static class WorldFactory
     {
-        internal World createWorld()
+        internal static World createWorld()
         {
             World newWorld = new World();
 
