@@ -1,21 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Engine.Models;
+using Engine.EventArgs;
 using Engine.Factories;
-using System.ComponentModel;
+using Engine.Models;
 
 namespace Engine.ViewModels
 {
     public class GameSession : BaseNotificationClass
     {
+        public event EventHandler<GameMessageEventArgs> OnMessageRaised;
+
         private Location _currentLocation;
         private Monster _currentMonster;
 
-        public Player CurrentPlayer { get; set; }
         public World CurrentWorld { get; set; }
+        public Player CurrentPlayer { get; set; }
 
         public Location CurrentLocation
         {
@@ -23,11 +22,12 @@ namespace Engine.ViewModels
             set
             {
                 _currentLocation = value;
-                OnPropertyChanged(nameof(CurrentLocation)); // using nameof() because if CurrentLocation name will change, this will still work
+
+                OnPropertyChanged(nameof(CurrentLocation));
                 OnPropertyChanged(nameof(HasLocationToNorth));
                 OnPropertyChanged(nameof(HasLocationToEast));
-                OnPropertyChanged(nameof(HasLocationToSouth));
                 OnPropertyChanged(nameof(HasLocationToWest));
+                OnPropertyChanged(nameof(HasLocationToSouth));
 
                 GivePlayerQuestsAtLocation();
                 GetMonsterAtLocation();
@@ -43,6 +43,12 @@ namespace Engine.ViewModels
 
                 OnPropertyChanged(nameof(CurrentMonster));
                 OnPropertyChanged(nameof(HasMonster));
+
+                if (CurrentMonster != null)
+                {
+                    RaiseMessage("");
+                    RaiseMessage($"You see a {CurrentMonster.Name} here!");
+                }
             }
         }
 
@@ -84,7 +90,7 @@ namespace Engine.ViewModels
         {
             CurrentPlayer = new Player
             {
-                Name = "SDB",
+                Name = "Scott",
                 CharacterClass = "Fighter",
                 HitPoints = 10,
                 Gold = 1000000,
@@ -92,14 +98,14 @@ namespace Engine.ViewModels
                 Level = 1
             };
 
-            CurrentWorld = WorldFactory.createWorld();
+            CurrentWorld = WorldFactory.CreateWorld();
 
-            CurrentLocation = CurrentWorld.LocationAt(0, -1);
+            CurrentLocation = CurrentWorld.LocationAt(0, 0);
         }
 
         public void MoveNorth()
         {
-            if (HasLocationToNorth) // Guard clauses
+            if (HasLocationToNorth)
             {
                 CurrentLocation = CurrentWorld.LocationAt(CurrentLocation.XCoordinate, CurrentLocation.YCoordinate + 1);
             }
@@ -143,6 +149,11 @@ namespace Engine.ViewModels
         private void GetMonsterAtLocation()
         {
             CurrentMonster = CurrentLocation.GetMonster();
+        }
+
+        private void RaiseMessage(string message)
+        {
+            OnMessageRaised?.Invoke(this, new GameMessageEventArgs(message));
         }
     }
 }

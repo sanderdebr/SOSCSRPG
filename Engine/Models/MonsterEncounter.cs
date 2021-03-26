@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Engine.Models
+﻿namespace Engine.Models
 {
-    class MonsterEncounter
+    public class MonsterEncounter
     {
         public int MonsterID { get; set; }
         public int ChanceOfEncountering { get; set; }
 
         public MonsterEncounter(int monsterID, int chanceOfEncountering)
         {
-            MonsterID = MonsterID;
+            MonsterID = monsterID;
             ChanceOfEncountering = chanceOfEncountering;
         }
     }

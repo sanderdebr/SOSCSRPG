@@ -1,15 +1,10 @@
 ﻿using Engine.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Engine.Factories
 {
     internal static class WorldFactory
     {
-        internal static World createWorld()
+        internal static World CreateWorld()
         {
             World newWorld = new World();
 
@@ -45,7 +40,6 @@ namespace Engine.Factories
 
             newWorld.LocationAt(2, 0).AddMonster(3, 100);
 
-
             newWorld.AddLocation(0, 1, "Herbalist's hut",
                 "You see a small hut, with plants drying from the roof.",
                 "/Engine;component/Images/Locations/HerbalistsHut.png");
@@ -57,7 +51,6 @@ namespace Engine.Factories
                 "/Engine;component/Images/Locations/HerbalistsGarden.png");
 
             newWorld.LocationAt(0, 2).AddMonster(1, 100);
-
 
             return newWorld;
         }
