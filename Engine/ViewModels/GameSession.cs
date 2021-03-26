@@ -97,7 +97,7 @@ namespace Engine.ViewModels
                 Name = "Scott",
                 CharacterClass = "Fighter",
                 HitPoints = 10,
-                Gold = 1000000,
+                Gold = 0,
                 ExperiencePoints = 0,
                 Level = 1
             };
